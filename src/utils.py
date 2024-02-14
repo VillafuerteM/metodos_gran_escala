@@ -3,7 +3,9 @@ This script contains the functions for
 - Preparation step:
 read the data, keep the columns needed, fill missing values and scale the features.
 - Training step:
+train the model using the training data and save the model.
 - Inference step:
+load the model and make predictions.
 """
 # -----------------------------------
 # libraries ----
@@ -138,3 +140,68 @@ def save_model(knn_best, path_to_save):
     - path_to_save: str
         Path to save the model"""
     joblib.dump(knn_best, path_to_save)
+
+# function to load the model
+def load_model(path_to_model):
+    """
+    Load the trained model from a file.
+    
+    Parameters:
+    - path_to_model: str
+        Path to load the model
+    
+    Returns:
+    - knn_best: KNeighborsRegressor
+        Trained model"""
+    knn_best = joblib.load(path_to_model)
+    return knn_best
+
+# load scaler
+def load_scaler(path_to_scaler):
+    """
+    Load the scaler used to scale the features.
+    
+    Parameters:
+    - path_to_scaler: str
+        Path to load the scaler
+    
+    Returns:
+    - scaler: StandardScaler
+        Scaler used to scale the features"""
+    scaler = joblib.load(path_to_scaler)
+    return scaler
+
+# function to scale the features
+def scale_test(df_test, scaler):
+    """
+    Scale the features to be used in the model. 
+    
+    Parameters:
+    - df_test: DataFrame
+        Dataframe with the selected columns
+    - scaler: StandardScaler
+        Scaler used to scale the features
+    
+    Returns:
+    - X_test_scaled: array
+        Array with the scaled features"""
+    X_test = df_test
+    X_test_scaled = scaler.transform(X_test)
+    return X_test_scaled
+
+# function to make predictions
+def make_predictions(knn_best, X_test_scaled):
+    """
+    Make predictions using the trained model.
+    
+    Parameters:
+    - knn_best: KNeighborsRegressor
+        Trained model
+    - X_test_scaled: array
+        Array with the scaled features
+    
+    Returns:
+    - predicted_sale_price: array
+        Array with the predicted sale prices"""
+    predicted_sale_price = knn_best.predict(X_test_scaled)
+    return predicted_sale_price

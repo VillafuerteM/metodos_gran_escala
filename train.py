@@ -26,4 +26,4 @@ y_train = utils.read_data("data/prep/y_train.csv")
 knn_best = utils.train_model(X_train_scaled, y_train, min=1, max=31)
 
 # Save the model as joblib file
-utils.save_model(knn_best, "artifacts/knn_best")
+utils.save_model(knn_best, "data/artifacts/knn_best")

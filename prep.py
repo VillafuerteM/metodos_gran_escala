@@ -35,4 +35,4 @@ pd.DataFrame(X_train_scaled).to_csv("data/prep/X_train_scaled.csv", index=False)
 pd.DataFrame(y_train).to_csv("data/prep/y_train.csv", index=False)
 
 # save the scaler
-joblib.dump(scaler, "data/prep/scaler.pkl")
+joblib.dump(scaler, "data/artifacts/scaler.joblib")
