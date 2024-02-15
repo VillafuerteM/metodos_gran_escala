@@ -10,7 +10,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 import pandas as pd
-import src.utils as utils
+import src.utils as utils 
 
 # -----------------------------------
 # funciones ----

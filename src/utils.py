@@ -97,6 +97,21 @@ def fill_missing_values(df_train_filt):
     df_train_filt = df_train_filt.fillna(mean_values)
     return df_train_filt
 
+# function to fill missing values in test with 0
+def fill_missing_values_test(df_test_filt):
+    """
+    Fill the missing values with 0.
+    
+    Parameters:
+    - df_test_filt: DataFrame
+        Dataframe with the selected columns
+    
+    Returns:
+    - df_test_filt: DataFrame
+        Dataframe with the missing values filled"""
+    df_test_filt = df_test_filt.fillna(0)
+    return df_test_filt
+
 # function to scale the features
 def scale_train(df_train_filt):
     """
