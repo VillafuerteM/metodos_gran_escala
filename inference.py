@@ -18,7 +18,11 @@ knn_best = utils.load_model("data/artifacts/knn_best.joblib")
 scaler = utils.load_scaler("data/artifacts/scaler.joblib")
 x_test = pd.read_csv('data/raw/test.csv')
 
+# seleccionar las columnas
 x_test_filt = utils.keep_columns_test(x_test)
+
+# lidiar con los missing values
+x_test_filt = utils.fill_missing_values_test(x_test_filt)
 
 # escalar las features
 x_test_scaled = utils.scale_test(x_test_filt, scaler)
