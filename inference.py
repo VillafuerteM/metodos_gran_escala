@@ -6,7 +6,7 @@ This script aims to make predictions using the trained model.
 # librerias
 import pandas as pd
 import joblib
-import src.utils.py as utils
+import src.utils as utils
 # ------------------------------------
 # funciones ----
 # las funciones se importan de src.utils.py
@@ -14,12 +14,14 @@ import src.utils.py as utils
 # ------------------------------------
 # main ----
 # cargar el modelo, el scaler y los datos de prueba
-knn_best = utils.load_model('artifacts/knn_best_model.joblib')
-scaler = utils.load_scaler('artifacts/scaler.joblib')
-x_test = pd.read_csv('data/raw/x_test.csv')
+knn_best = utils.load_model("data/artifacts/knn_best.joblib")
+scaler = utils.load_scaler("data/artifacts/scaler.joblib")
+x_test = pd.read_csv('data/raw/test.csv')
+
+x_test_filt = utils.keep_columns_test(x_test)
 
 # escalar las features
-x_test_scaled = utils.scale_test(x_test, scaler)
+x_test_scaled = utils.scale_test(x_test_filt, scaler)
 
 # hacer las predicciones
 y_pred = utils.make_predictions(knn_best, x_test_scaled)
