@@ -8,7 +8,7 @@ for furtger use in the inference step.
 
 # -----------------------------------
 # libraries ----
-import src.utils.py as utils
+import src.utils as utils
 import pandas as pd
 import joblib
 

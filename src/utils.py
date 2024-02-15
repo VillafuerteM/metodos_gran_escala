@@ -59,6 +59,28 @@ def keep_columns(df_train):
     df_train_filt = df_train[columns_to_keep]
     return df_train_filt
 
+# function to keep columns needed for data testing
+def keep_columns_test(df_test):
+    """
+    Keep only the columns that are going to be used to predict with the model. 
+    The columns are selected based on the data exploration.
+    
+    Parameters:
+    - df_train: DataFrame
+        Dataframe with the data to train the model
+    
+    Returns:
+    - df_train_filt: DataFrame
+        Dataframe with the selected columns"""
+    columns_to_keep = [
+        'GrLivArea', 'LotArea',
+        'YearBuilt', 'FullBath', 'HalfBath',
+        'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageCars',
+        'GarageArea', 'Fireplaces'
+    ]
+    df_test_filt = df_test[columns_to_keep]
+    return df_test_filt
+
 # function to fill missing values with average per column
 def fill_missing_values(df_train_filt):
     """
@@ -205,3 +227,15 @@ def make_predictions(knn_best, X_test_scaled):
         Array with the predicted sale prices"""
     predicted_sale_price = knn_best.predict(X_test_scaled)
     return predicted_sale_price
+
+# function to save the predictions
+def save_predictions(y_pred, path_to_save):
+    """
+    Save the predictions in a file.
+    
+    Parameters:
+    - y_pred: array
+        Array with the predicted sale prices
+    - path_to_save: str
+        Path to save the predictions"""
+    pd.DataFrame(y_pred).to_csv(path_to_save, index=False)
