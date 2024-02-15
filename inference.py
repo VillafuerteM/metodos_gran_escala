@@ -5,8 +5,7 @@ This script aims to make predictions using the trained model.
 # ------------------------------------
 # librerias
 import pandas as pd
-import joblib
-import src.utils as utils
+from src import utils
 # ------------------------------------
 # funciones ----
 # las funciones se importan de src.utils.py

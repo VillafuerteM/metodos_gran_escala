@@ -12,7 +12,6 @@ load the model and make predictions.
 import numpy as np
 import pandas as pd
 import joblib
-from sklearn import linear_model
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.preprocessing import StandardScaler
@@ -36,7 +35,7 @@ def read_data(path_to_file):
     except FileNotFoundError:
         print("File not found")
         return None
-    
+
 # function to keep columns needed for data training
 def keep_columns(df_train):
     """
@@ -122,46 +121,44 @@ def scale_train(df_train_filt):
         Dataframe with the selected columns
     
     Returns:
-    - X_train_scaled: array
+    - x_train_scaled: array
         Array with the scaled features"""
-    from sklearn.preprocessing import StandardScaler
     scaler = StandardScaler()
-    X_train = df_train_filt.drop("SalePrice", axis=1)
+    x_train = df_train_filt.drop("SalePrice", axis=1)
     y_train = df_train_filt["SalePrice"]
-    X_train_scaled = scaler.fit_transform(X_train)
-    return X_train_scaled, y_train, scaler
+    x_train_scaled = scaler.fit_transform(x_train)
+    return x_train_scaled, y_train, scaler
 
 # function to train the model
-def train_model(X_train_scaled, y_train, min=1, max=31):
+def train_model(x_train_scaled, y_train, minimo=1, maximo=31):
     """
     Train the model using the training data. The model is a KNN regressor.
     
     Parameters:
-    - X_train_scaled: DataFrame
+    - x_train_scaled: DataFrame
         Dataframe with the scaled features
     - y_train: DataFrame
         Dataframe with the target variable
-    - min: int
+    - minimo: int
         Minimum number of neighbors to consider
-    - max: int
+    - maximo: int
         Maximum number of neighbors to consider
     
     Returns:
     - knn_best: KNeighborsRegressor
         Trained model"""
-    
+
     # declare the model
     knn_regressor = KNeighborsRegressor()
 
     # grid search to find the best number of neighbors
-    param_grid = {'n_neighbors': np.arange(min, max)}
+    param_grid = {'n_neighbors': np.arange(minimo, maximo)}
 
     # train the model
     grid_search = GridSearchCV(knn_regressor, param_grid, cv=5)
-    grid_search.fit(X_train_scaled, y_train)
+    grid_search.fit(x_train_scaled, y_train)
 
     # get the best model
-    best_k = grid_search.best_params_['n_neighbors']
     knn_best = grid_search.best_estimator_
 
     return knn_best
@@ -220,27 +217,27 @@ def scale_test(df_test, scaler):
         Scaler used to scale the features
     
     Returns:
-    - X_test_scaled: array
+    - x_test_scaled: array
         Array with the scaled features"""
-    X_test = df_test
-    X_test_scaled = scaler.transform(X_test)
-    return X_test_scaled
+    x_test = df_test
+    x_test_scaled = scaler.transform(x_test)
+    return x_test_scaled
 
 # function to make predictions
-def make_predictions(knn_best, X_test_scaled):
+def make_predictions(knn_best, x_test_scaled):
     """
     Make predictions using the trained model.
     
     Parameters:
     - knn_best: KNeighborsRegressor
         Trained model
-    - X_test_scaled: array
+    - x_test_scaled: array
         Array with the scaled features
     
     Returns:
     - predicted_sale_price: array
         Array with the predicted sale prices"""
-    predicted_sale_price = knn_best.predict(X_test_scaled)
+    predicted_sale_price = knn_best.predict(x_test_scaled)
     return predicted_sale_price
 
 # function to save the predictions

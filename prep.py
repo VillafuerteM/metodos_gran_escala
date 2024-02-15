@@ -8,9 +8,9 @@ for furtger use in the inference step.
 
 # -----------------------------------
 # libraries ----
-import src.utils as utils
 import pandas as pd
 import joblib
+from src import utils
 
 # -----------------------------------
 # funciones ----
