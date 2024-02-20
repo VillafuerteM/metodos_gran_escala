@@ -1,0 +1,27 @@
+# config.yaml
+
+main:
+  components_repository: "https://github.com/VillafuerteM/metodos_gran_escala"
+  project_name: metodos_gran_escala
+  steps: all
+prep:
+  sample_data: "train.csv"
+  columns_to keep: [
+        'GrLivArea', 'LotArea',
+        'YearBuilt', 'FullBath', 'HalfBath',
+        'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageCars',
+        'GarageArea', 'Fireplaces', 'SalePrice'
+    ]
+modeling:
+  # Fix this for reproducibility, change to have new splits
+  random_seed: 13579
+  # KNeighborsRegressor:
+  KNeighborsRegressor:
+  'algorithm': 'auto',
+  'leaf_size': 30,
+  'metric': 'minkowski',
+  'metric_params': None,
+  'n_jobs': None,
+  'n_neighbors': 6,
+  'p': 2,
+  'weights': 'uniform'
