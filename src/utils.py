@@ -41,6 +41,8 @@ def keep_columns(df_train):
     """
     Keep only the columns that are going to be used to train the model. 
     The columns are selected based on the data exploration.
+    It handles the error in which the columns are not found and sends 
+    a message to the user stating that the columns are not found.
     
     Parameters:
     - df_train: DataFrame
@@ -49,20 +51,25 @@ def keep_columns(df_train):
     Returns:
     - df_train_filt: DataFrame
         Dataframe with the selected columns"""
-    columns_to_keep = [
-        'GrLivArea', 'LotArea',
-        'YearBuilt', 'FullBath', 'HalfBath',
-        'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageCars',
-        'GarageArea', 'Fireplaces', 'SalePrice'
-    ]
-    df_train_filt = df_train[columns_to_keep]
-    return df_train_filt
+    try: 
+        columns_to_keep = [
+            'GrLivArea', 'LotArea',
+            'YearBuilt', 'FullBath', 'HalfBath',
+            'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageCars',
+            'GarageArea', 'Fireplaces', 'SalePrice'
+        ]
+        df_train_filt = df_train[columns_to_keep]
+        return df_train_filt
+    except KeyError:
+        print("Columns not found")
+        return None
 
 # function to keep columns needed for data testing
 def keep_columns_test(df_test):
     """
     Keep only the columns that are going to be used to predict with the model. 
     The columns are selected based on the data exploration.
+    It tries to keep the columns and if it fails, it sends a message to the user.
     
     Parameters:
     - df_train: DataFrame
@@ -71,14 +78,18 @@ def keep_columns_test(df_test):
     Returns:
     - df_train_filt: DataFrame
         Dataframe with the selected columns"""
-    columns_to_keep = [
-        'GrLivArea', 'LotArea',
-        'YearBuilt', 'FullBath', 'HalfBath',
-        'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageCars',
-        'GarageArea', 'Fireplaces'
-    ]
-    df_test_filt = df_test[columns_to_keep]
-    return df_test_filt
+    try:
+        columns_to_keep = [
+            'GrLivArea', 'LotArea',
+            'YearBuilt', 'FullBath', 'HalfBath',
+            'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageCars',
+            'GarageArea', 'Fireplaces'
+        ]
+        df_test_filt = df_test[columns_to_keep]
+        return df_test_filt
+    except KeyError:
+        print("Columns not found")
+        return None
 
 # function to fill missing values with average per column
 def fill_missing_values(df_train_filt):
@@ -166,19 +177,24 @@ def train_model(x_train_scaled, y_train, minimo=1, maximo=31):
 # function to save the model
 def save_model(knn_best, path_to_save):
     """
-    Save the trained model in a file.
+    Save the trained model in a file. Tries to save the model to path
+    and if it fails, it sends a message to the user.
     
     Parameters:
     - knn_best: KNeighborsRegressor
         Trained model
     - path_to_save: str
         Path to save the model"""
-    joblib.dump(knn_best, path_to_save)
+    try:
+        joblib.dump(knn_best, path_to_save)
+    except:
+        print("Model not saved, path not found")
 
 # function to load the model
 def load_model(path_to_model):
     """
-    Load the trained model from a file.
+    Load the trained model from a file. Tries to load the model from path
+    and if it fails, it sends a message to the user.
     
     Parameters:
     - path_to_model: str
@@ -187,8 +203,12 @@ def load_model(path_to_model):
     Returns:
     - knn_best: KNeighborsRegressor
         Trained model"""
-    knn_best = joblib.load(path_to_model)
-    return knn_best
+    try:
+        knn_best = joblib.load(path_to_model)
+        return knn_best
+    except:
+        print("Model not loaded, path not found")
+        return None
 
 # load scaler
 def load_scaler(path_to_scaler):
