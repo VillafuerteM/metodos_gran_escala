@@ -213,7 +213,8 @@ def load_model(path_to_model):
 # load scaler
 def load_scaler(path_to_scaler):
     """
-    Load the scaler used to scale the features.
+    Load the scaler used to scale the features. It tries to load the scaler
+    and if it fails, it sends a message to the user.
     
     Parameters:
     - path_to_scaler: str
@@ -222,8 +223,12 @@ def load_scaler(path_to_scaler):
     Returns:
     - scaler: StandardScaler
         Scaler used to scale the features"""
-    scaler = joblib.load(path_to_scaler)
-    return scaler
+    try:
+        scaler = joblib.load(path_to_scaler)
+        return scaler
+    except:
+        print("Scaler not loaded, path not found")
+        return None
 
 # function to scale the features
 def scale_test(df_test, scaler):
@@ -263,11 +268,15 @@ def make_predictions(knn_best, x_test_scaled):
 # function to save the predictions
 def save_predictions(y_pred, path_to_save):
     """
-    Save the predictions in a file.
+    Save the predictions in a file. It tries to save the predictions to path
+    and if it fails, it sends a message to the user.
     
     Parameters:
     - y_pred: array
         Array with the predicted sale prices
     - path_to_save: str
         Path to save the predictions"""
-    pd.DataFrame(y_pred).to_csv(path_to_save, index=False)
+    try:
+        pd.DataFrame(y_pred).to_csv(path_to_save, index=False)
+    except:
+        print("Predictions not saved, path not found")
