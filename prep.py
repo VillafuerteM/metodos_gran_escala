@@ -23,6 +23,7 @@ from src import utils
 parser = argparse.ArgumentParser()
 parser.add_argument('train_data', help='name of the training data file')
 args = parser.parse_args()
+
 # -----------------------------------
 # main ----
 # read the data using the argument passed in the command line
