@@ -10,6 +10,8 @@ for furtger use in the inference step.
 # libraries ----
 import pandas as pd
 import joblib
+import argparse
+import os
 from src import utils
 
 # -----------------------------------
@@ -17,9 +19,15 @@ from src import utils
 # functions are declared in utils.py file located in src folder
 
 # -----------------------------------
+# agruments ----
+parser = argparse.ArgumentParser()
+parser.add_argument('train_data', help='name of the training data file')
+args = parser.parse_args()
+# -----------------------------------
 # main ----
-# read the data
-df_train = utils.read_data("data/raw/train.csv")
+# read the data using the argument passed in the command line
+df_train = utils.read_data(os.path.join("data", "raw", args.train_data))
+
 
 # keep only the columns needed
 df_train_filt = utils.keep_columns(df_train)
