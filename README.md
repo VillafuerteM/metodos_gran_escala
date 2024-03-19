@@ -28,3 +28,6 @@ notebooks: contiene el ejercicio inicial del desarrollo del modelo y el EDA
 
 ## Requisitos del sistema
 Todo el proyecto se desarrolla en Python. En específico, se incluye el archivo de requirements.txt
+
+## Flujo de ejecución
+![alt text](tarea5_mge.drawio.png)
